@@ -25,9 +25,36 @@ class User(db.Model, UserMixin):
         """Check hashed password."""
         return check_password_hash(self.password, password)
 
-class RegularUser()
+class Chat(db.Model):
+    id=db.Column(db.String(120), primary_key=True)
+    user_id=db.Column(db.Integer, db.ForeignKey('regular_user.id'), nullable=False)
+    text=db.Column(db.String(250), nullable=False)
+    done=db.Column(db.Boolean, default=False)
 
-class Admin(db.Model):
+    def __init__(self, text):
+        self.text=text
+
+    def toggle(self):
+        self.done=not self.done
+        db.session.add(self)
+        db.session.commit()
+
+    def toJSON(self):
+        return{
+            "id":self.id,
+            "text":self.text,
+            "done":self.done
+        }        
+
+class RegularUser(User):
+    __tablename__='regular_user'
+    chats=db.relationship('Chat', backref='user', lazy=True)
+
+    def add_chat()
+
+
+
+class Admin(User):
     __tablename__='Admin'
     admin_id=db.Column(db.String(120), unique=True, nullable=False)
 

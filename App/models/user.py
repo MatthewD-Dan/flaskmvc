@@ -25,3 +25,10 @@ class User(db.Model, UserMixin):
         """Check hashed password."""
         return check_password_hash(self.password, password)
 
+class RegularUser()
+
+class Admin(db.Model):
+    __tablename__='Admin'
+    admin_id=db.Column(db.String(120), unique=True, nullable=False)
+
+    def get_all_chats(self):
